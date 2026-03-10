@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../core/design_system.dart';
+import '../../core/app_colors.dart';
+import '../../core/utils/scroll_utils.dart';
 
-/// Hero Section for Portfolio Home Page
-/// Modern developer portfolio hero section with gradient text and responsive layout
+// Colors now come from ThemeData, not a static class.
+
+/// Phần Hero cho Trang Chủ Portfolio
+/// Phần hero portfolio nhà phát triển hiện đại với văn bản gradient và bố cục đáp ứng
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
@@ -28,15 +32,9 @@ class HeroSection extends StatelessWidget {
   Widget _buildDesktopLayout(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          flex: 2,
-          child: _buildLeftContent(context),
-        ),
+        Expanded(flex: 2, child: _buildLeftContent(context)),
         const SizedBox(width: AppSpacing.xl),
-        Expanded(
-          flex: 1,
-          child: _buildRightContent(),
-        ),
+        Expanded(flex: 1, child: _buildRightContent(context)),
       ],
     );
   }
@@ -45,7 +43,7 @@ class HeroSection extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildRightContent(),
+        _buildRightContent(context),
         const SizedBox(height: AppSpacing.xl),
         _buildLeftContent(context),
       ],
@@ -71,51 +69,50 @@ class HeroSection extends StatelessWidget {
   Widget _buildTitle(BuildContext context) {
     return ShaderMask(
       shaderCallback: (Rect bounds) {
-        return AppColors.accentGradient.createShader(bounds);
+        return Theme.of(context).accentGradient.createShader(bounds);
       },
       child: Text(
-        "Hi, I'm Tam",
+        "Xin chào, tôi là Tâm",
         style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-              color: Colors.white, // Shader will override this
-              fontWeight: FontWeight.bold,
-            ),
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
   Widget _buildSubtitle(BuildContext context) {
     return Text(
-      "Flutter Developer",
+      "Nhà phát triển Flutter",
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            color: AppColors.secondaryColor,
-            fontWeight: FontWeight.w600,
-          ),
+        color: AppColors.textPrimary,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 
   Widget _buildDescription(BuildContext context) {
     return Text(
-      "Passionate Flutter developer creating beautiful and functional mobile and web applications with modern design and clean code.",
+      "Nhà phát triển Flutter đam mê tạo ra các ứng dụng di động và web đẹp và chức năng với thiết kế hiện đại và mã sạch.",
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Colors.grey[300],
-            height: 1.6,
-          ),
+        color: AppColors.textSecondary,
+        height: 1.6,
+      ),
     );
   }
 
   Widget _buildButtons(BuildContext context) {
     return Row(
       children: [
-        // View Projects Button
+        // Nút Xem Dự Án
         Container(
           decoration: BoxDecoration(
-            gradient: AppColors.accentGradient,
+            gradient: Theme.of(context).accentGradient,
             borderRadius: AppBorderRadius.medium,
           ),
           child: ElevatedButton(
             onPressed: () {
-              // TODO: Navigate to projects section
-              _onButtonPressed('Projects');
+              _onButtonPressed('Dự Án');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
@@ -129,74 +126,88 @@ class HeroSection extends StatelessWidget {
               ),
             ),
             child: Text(
-              'View Projects',
+              'Xem Dự Án',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
         const SizedBox(width: AppSpacing.md),
-        // Contact Me Button
+        // Nút Liên Hệ Tôi
         OutlinedButton(
           onPressed: () {
-            // TODO: Navigate to contact section
-            _onButtonPressed('Contact');
+            _onButtonPressed('Liên Hệ');
           },
           style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.primaryColor,
-            side: const BorderSide(
-              color: AppColors.primaryColor,
+            foregroundColor: Theme.of(context).colorScheme.primary,
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.primary,
               width: 2,
             ),
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.lg,
               vertical: AppSpacing.md,
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: AppBorderRadius.medium,
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppBorderRadius.medium),
           ),
           child: Text(
-            'Contact Me',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            'Liên Hệ Tôi',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildRightContent() {
+  Widget _buildRightContent(BuildContext context) {
     return Center(
       child: Container(
         width: 300,
         height: 300,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: AppColors.accentGradient,
+          gradient: Theme.of(context).accentGradient,
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryColor.withValues(alpha: 0.3),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.3),
               blurRadius: 20,
               spreadRadius: 5,
             ),
           ],
         ),
-        child: const Icon(
-          Icons.code,
-          size: 150,
-          color: Colors.white,
+        child: ClipOval(
+          child: Image.asset(
+            'assets/images/tam.jpg',
+            fit: BoxFit.cover,
+            width: 300,
+            height: 300,
+          ),
         ),
       ),
     );
   }
 
   void _onButtonPressed(String section) {
-    // Placeholder for navigation logic
-    // This could scroll to sections or navigate to pages
-    debugPrint('Navigate to: $section');
+    // Cuộn đến các phần tương ứng bằng ScrollNavigationService
+    final scrollService = ScrollNavigationService();
+
+    switch (section.toLowerCase()) {
+      case 'dự án':
+      case 'xem dự án':
+        scrollService.scrollToProjects();
+        break;
+      case 'liên hệ':
+      case 'liên hệ tôi':
+        scrollService.scrollToContact();
+        break;
+      default:
+        debugPrint('Không biết điều hướng đến: $section');
+    }
   }
 }

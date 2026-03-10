@@ -31,10 +31,10 @@ class ProjectSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Projects',
+          'Dự án của tôi',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -42,7 +42,7 @@ class ProjectSection extends StatelessWidget {
           width: 80,
           height: 4,
           decoration: BoxDecoration(
-            gradient: AppColors.accentGradient,
+            gradient: Theme.of(context).accentGradient,
             borderRadius: AppBorderRadius.small,
           ),
         ),

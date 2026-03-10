@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../core/design_system.dart';
+import '../../../core/app_colors.dart';
 import '../data/skills_mock_data.dart';
 
 /// Skill Card Widget
@@ -35,14 +36,14 @@ class _SkillCardState extends State<SkillCard> {
             border: Border.all(
               color: _isHovered
                   ? widget.skill.accentColor.withValues(alpha: 0.5)
-                  : Colors.white.withValues(alpha: 0.1),
+                  : AppColors.textPrimary.withValues(alpha: 0.1),
               width: 2,
             ),
             boxShadow: [
               BoxShadow(
                 color: _isHovered
                     ? widget.skill.accentColor.withValues(alpha: 0.3)
-                    : Colors.black.withValues(alpha: 0.2),
+                    : AppColors.backgroundPrimary.withValues(alpha: 0.2),
                 blurRadius: _isHovered ? 16 : 8,
                 spreadRadius: _isHovered ? 2 : 0,
               ),
@@ -53,7 +54,7 @@ class _SkillCardState extends State<SkillCard> {
               filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.05),
+                  color: AppColors.textPrimary.withValues(alpha: 0.05),
                   borderRadius: AppBorderRadius.medium,
                 ),
                 padding: const EdgeInsets.all(AppSpacing.md),
@@ -69,7 +70,7 @@ class _SkillCardState extends State<SkillCard> {
                         size: 48,
                         color: _isHovered
                             ? widget.skill.accentColor
-                            : Colors.white.withValues(alpha: 0.8),
+                            : AppColors.textPrimary.withValues(alpha: 0.8),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -79,7 +80,7 @@ class _SkillCardState extends State<SkillCard> {
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             color: _isHovered
                                 ? widget.skill.accentColor
-                                : Colors.white,
+                                : AppColors.textPrimary.withValues(alpha: 0.8),
                             fontWeight: FontWeight.w600,
                           ),
                       textAlign: TextAlign.center,

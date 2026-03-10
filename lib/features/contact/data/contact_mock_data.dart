@@ -21,23 +21,23 @@ class ContactMethod {
 final List<ContactMethod> contactMethodsMockData = [
   ContactMethod(
     label: 'Email',
-    value: 'contact@tam.dev',
+    value: 'chitamlefc@gmail.com',
     icon: Icons.email_outlined,
     accentColor: const Color(0xFF7C3AED),
-    url: 'mailto:contact@tam.dev',
+    url: 'mailto:chitamlefc@gmail.com',
   ),
   ContactMethod(
     label: 'GitHub',
-    value: '@tam-dev',
+    value: 'tamfc123',
     icon: Icons.code,
     accentColor: const Color(0xFFFFFFFF),
-    url: 'https://github.com/tam-dev',
+    url: 'https://github.com/tamfc123',
   ),
   ContactMethod(
     label: 'LinkedIn',
-    value: 'tam-dev',
+    value: 'ctam-le',
     icon: Icons.business,
     accentColor: const Color(0xFF0A66C2),
-    url: 'https://linkedin.com/in/tam-dev',
+    url: 'https://www.linkedin.com/in/ctam-le-2a6b0534a/?trk=opento_sprofile_details',
   ),
 ];

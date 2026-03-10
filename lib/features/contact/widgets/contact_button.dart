@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/design_system.dart';
+import '../../../core/app_colors.dart';
 import '../data/contact_mock_data.dart';
 
 /// Contact Button Widget
@@ -82,7 +83,7 @@ class _ContactButtonState extends State<ContactButton> {
                               .bodyMedium
                               ?.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: AppColors.textPrimary,
                               ),
                         ),
                         const SizedBox(height: 4),
@@ -92,7 +93,7 @@ class _ContactButtonState extends State<ContactButton> {
                               .textTheme
                               .bodySmall
                               ?.copyWith(
-                                color: Colors.grey[400],
+                                color: AppColors.textSecondary,
                               ),
                           overflow: TextOverflow.ellipsis,
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/design_system.dart';
+import '../../core/app_colors.dart';
 import '../../core/utils/scroll_utils.dart';
 import '../../widgets/portfolio_navbar.dart';
 import '../home/hero_section.dart';
@@ -31,7 +32,7 @@ class _HomePortfolioPageState extends State<HomePortfolioPage> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    
+
     // Initialize scroll navigation service
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScrollNavigationService().initialize(
@@ -53,7 +54,7 @@ class _HomePortfolioPageState extends State<HomePortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
@@ -105,10 +106,10 @@ class _HomePortfolioPageState extends State<HomePortfolioPage> {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.surfaceColor,
+        color: Theme.of(context).colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: Colors.white.withValues(alpha: 0.1),
+            color: AppColors.textPrimary.withValues(alpha: 0.1),
           ),
         ),
       ),
@@ -116,7 +117,7 @@ class _HomePortfolioPageState extends State<HomePortfolioPage> {
         child: Text(
           '© 2026 Tam Portfolio. All rights reserved.',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey[500],
+                color: AppColors.textSecondary,
               ),
         ),
       ),

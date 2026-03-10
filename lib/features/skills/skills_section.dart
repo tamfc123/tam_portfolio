@@ -34,7 +34,7 @@ class SkillsSection extends StatelessWidget {
           'Tech Stack',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onBackground,
               ),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -42,7 +42,7 @@ class SkillsSection extends StatelessWidget {
           width: 80,
           height: 4,
           decoration: BoxDecoration(
-            gradient: AppColors.accentGradient,
+            gradient: Theme.of(context).accentGradient,
             borderRadius: AppBorderRadius.small,
           ),
         ),

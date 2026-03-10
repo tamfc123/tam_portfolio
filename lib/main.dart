@@ -21,8 +21,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Tam Portfolio',
       debugShowCheckedModeBanner: false,
       
-      // Modern Dark Theme (Primary)
-      theme: AppTheme.modernDarkTheme,
+      // Global dark theme
+      theme: AppTheme.darkTheme,
       
       home: const HomePortfolioPage(),
     );

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../core/design_system.dart';
+import '../../core/app_colors.dart';
 import 'data/contact_mock_data.dart';
 import 'widgets/contact_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-/// Contact Section Widget
-/// Displays contact information with methods (Email, GitHub, LinkedIn)
+/// Widget Phần Liên Hệ
+/// Hiển thị thông tin liên hệ với các phương pháp (Email, GitHub, LinkedIn)
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
 
@@ -15,7 +17,7 @@ class ContactSection extends StatelessWidget {
         horizontal: AppSpacing.xl,
         vertical: AppSpacing.xl,
       ),
-      color: AppColors.backgroundColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,10 +34,10 @@ class ContactSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Contact Me',
+          'Liên Hệ Với Tôi',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppColors.textPrimary,
               ),
         ),
         const SizedBox(height: AppSpacing.md),
@@ -43,7 +45,7 @@ class ContactSection extends StatelessWidget {
           width: 80,
           height: 4,
           decoration: BoxDecoration(
-            gradient: AppColors.accentGradient,
+            gradient: Theme.of(context).accentGradient,
             borderRadius: AppBorderRadius.small,
           ),
         ),
@@ -90,25 +92,25 @@ class ContactSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Let\'s Connect',
+          'Hãy Kết Nối',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppColors.secondaryColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
         ),
         const SizedBox(height: AppSpacing.md),
         Text(
-          'I\'m always interested in hearing about new projects and opportunities. Feel free to reach out through any of the methods below.',
+          'Tôi luôn quan tâm đến các dự án và cơ hội mới. Hãy thoải mái liên hệ thông qua bất kỳ phương pháp nào dưới đây.',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.grey[300],
+                color: AppColors.textSecondary,
                 height: 1.6,
               ),
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(
-          'Response time: Within 24 hours',
+          'Thời gian phản hồi: Trong vòng 24 giờ',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[400],
+                color: AppColors.textSecondary,
                 fontStyle: FontStyle.italic,
               ),
         ),
@@ -135,11 +137,17 @@ class ContactSection extends StatelessWidget {
     );
   }
 
-  void _onContactMethodPressed(ContactMethod contact) {
-    debugPrint('Contact method: ${contact.label}');
-    // TODO: Implement URL launch logic using url_launcher package
-    // if (contact.url != null) {
-    //   launchUrl(Uri.parse(contact.url!));
-    // }
+  void _onContactMethodPressed(ContactMethod contact) async {
+    debugPrint('Phương pháp liên hệ: ${contact.label}');
+    if (contact.url != null) {
+      final uri = Uri.parse(contact.url!);
+      try {
+        if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+          debugPrint('Không thể mở URL: $uri');
+        }
+      } catch (e) {
+        debugPrint('Lỗi khi mở URL: $e');
+      }
+    }
   }
 }

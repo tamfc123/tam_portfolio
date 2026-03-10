@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 
-/// Design system for the Flutter Web portfolio app.
-/// Contains colors, spacing, and border radius constants for consistent UI.
-class AppColors {
-  /// Primary color: deep purple neon
-  static const Color primaryColor = Color(0xFF7C3AED);
-
-  /// Secondary color: complementary to primary
-  static const Color secondaryColor = Color(0xFF06B6D4);
-
-  /// Background color: dark theme
-  static const Color backgroundColor = Color(0xFF0F0F0F);
-
-  /// Surface color: slightly lighter than background for cards/elements
-  static const Color surfaceColor = Color(0xFF1A1A1A);
-
-  /// Accent gradient: neon gradient for highlights
-  static const LinearGradient accentGradient = LinearGradient(
-    colors: [Color(0xFF7C3AED), Color(0xFF10B981)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
+/// Extension providing gradient derived from the current theme.
+extension PortfolioThemeAccent on ThemeData {
+  LinearGradient get accentGradient => LinearGradient(
+        colors: [
+          colorScheme.primary,
+          colorScheme.secondary,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
 }
+
+/// Design system for layout spacing and border radius.
+/// Colors are defined by the active theme instead of global constants.
 
 /// Spacing constants for consistent padding and margins.
 class AppSpacing {

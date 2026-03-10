@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../design_system.dart';
+import '../app_colors.dart';
 
 /// Font Constants
 /// Centralized font family definitions
@@ -9,93 +9,84 @@ class AppFonts {
   static const String secondary = 'Montserrat';
 }
 
-/// Modern Dark Theme for Flutter Web Portfolio
-/// Dark modern developer portfolio theme with neon purple accents
+/// App-wide dark theme using centralized color palette.
 class AppTheme {
-  // Private constructor to prevent instantiation
   AppTheme._();
 
-  /// Dark Theme Data - Modern Developer Portfolio
   static ThemeData get darkTheme {
+    final colorScheme = ColorScheme.dark(
+      background: AppColors.backgroundPrimary,
+      surface: AppColors.backgroundSecondary,
+      primary: AppColors.accentColor,
+      secondary: AppColors.accentHover,
+      onBackground: AppColors.textPrimary,
+      onSurface: AppColors.textPrimary,
+      onPrimary: AppColors.textPrimary,
+      onSecondary: AppColors.textPrimary,
+    );
+
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      colorScheme: colorScheme,
 
-      // Color Scheme with neon purple primary
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primaryColor, // Neon purple
-        brightness: Brightness.dark,
-        surface: AppColors.surfaceColor, // Dark grey for cards
-        onSurface: Colors.white,
-        primaryContainer: AppColors.surfaceColor,
-        onPrimaryContainer: Colors.white,
-      ),
+      scaffoldBackgroundColor: AppColors.backgroundPrimary,
+      hoverColor: AppColors.accentHover,
 
-      // Very dark background
-      scaffoldBackgroundColor: AppColors.backgroundColor,
-
-      // AppBar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.backgroundColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundSecondary,
+        foregroundColor: AppColors.textPrimary,
         elevation: 0,
         centerTitle: true,
         titleTextStyle: GoogleFonts.poppins(
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: AppColors.textPrimary,
         ),
       ),
 
-      // Text Theme with Poppins
       textTheme: TextTheme(
-        // Hero title - large and bold
         headlineLarge: GoogleFonts.poppins(
           fontSize: 48,
           fontWeight: FontWeight.w700,
-          color: Colors.white,
+          color: AppColors.textPrimary,
           height: 1.2,
         ),
-        // Section headers
         headlineMedium: GoogleFonts.poppins(
           fontSize: 32,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: AppColors.textPrimary,
           height: 1.3,
         ),
-        // Sub-section titles
         titleLarge: GoogleFonts.poppins(
           fontSize: 24,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: AppColors.textPrimary,
           height: 1.4,
         ),
-        // Main body text
         bodyLarge: GoogleFonts.poppins(
           fontSize: 16,
           fontWeight: FontWeight.w400,
-          color: Colors.white,
+          color: AppColors.textPrimary,
           height: 1.6,
         ),
-        // Secondary body text
         bodyMedium: GoogleFonts.poppins(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: Colors.grey[300],
+          color: AppColors.textSecondary,
           height: 1.5,
         ),
       ),
 
-      // Elevated Button Theme - Modern with gradient support
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent, // Transparent for gradient
-          foregroundColor: Colors.white,
-          elevation: 0, // No shadow for gradient effect
+          backgroundColor: AppColors.accentColor,
+          foregroundColor: AppColors.textPrimary,
+          elevation: 0,
           shadowColor: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // Rounded corners
+            borderRadius: BorderRadius.circular(12),
           ),
           textStyle: GoogleFonts.poppins(
             fontSize: 16,
@@ -104,47 +95,30 @@ class AppTheme {
         ),
       ),
 
-      // Card Theme - Dark grey background
       cardTheme: CardThemeData(
-        color: AppColors.surfaceColor,
-        elevation: 4,
-        shadowColor: Colors.black.withValues(alpha: 0.3),
+        color: AppColors.backgroundSecondary,
+        elevation: 2,
+        shadowColor: Colors.black.withValues(alpha: 0.2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
 
-      // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceColor,
+        fillColor: AppColors.backgroundSecondary,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide.none,
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: AppColors.primaryColor,
-            width: 2,
-          ),
-        ),
-        labelStyle: GoogleFonts.poppins(
-          color: Colors.grey[400],
-        ),
-        hintStyle: GoogleFonts.poppins(
-          color: Colors.grey[500],
-        ),
+        labelStyle: GoogleFonts.poppins(color: AppColors.textSecondary),
+        hintStyle: GoogleFonts.poppins(color: AppColors.textSecondary),
       ),
 
-      // Icon Theme
       iconTheme: const IconThemeData(
-        color: AppColors.primaryColor,
+        color: AppColors.accentColor,
         size: 24,
       ),
     );
   }
-
-  /// Modern Dark Theme (alias for darkTheme for compatibility)
-  static ThemeData get modernDarkTheme => darkTheme;
 }

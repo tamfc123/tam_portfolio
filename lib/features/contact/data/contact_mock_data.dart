@@ -21,10 +21,10 @@ class ContactMethod {
 final List<ContactMethod> contactMethodsMockData = [
   ContactMethod(
     label: 'Email',
-    value: 'chitamlefc@gmail.com',
+    value: 'chitam.dev@gmail.com',
     icon: Icons.email_outlined,
     accentColor: const Color(0xFF7C3AED),
-    url: 'mailto:chitamlefc@gmail.com',
+    url: 'mailto:chitam.dev@gmail.com',
   ),
   ContactMethod(
     label: 'GitHub',

@@ -11,6 +11,7 @@ class ProjectSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.xl,
         vertical: AppSpacing.xl,
@@ -27,26 +28,30 @@ class ProjectSection extends StatelessWidget {
   }
 
   Widget _buildSectionTitle(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Dự án của tôi',
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Dự án của tôi',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Container(
-          width: 80,
-          height: 4,
-          decoration: BoxDecoration(
-            gradient: Theme.of(context).accentGradient,
-            borderRadius: AppBorderRadius.small,
-          ),
-        ),
-      ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Container(
+              width: constraints.maxWidth > 600 ? 200 : 80,
+              height: 4,
+              decoration: BoxDecoration(
+                gradient: Theme.of(context).accentGradient,
+                borderRadius: AppBorderRadius.small,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -69,16 +74,22 @@ class ProjectSection extends StatelessWidget {
         // Calculate the width of each card
         final cardWidth =
             (constraints.maxWidth - (AppSpacing.lg * (crossAxisCount - 1))) /
-                crossAxisCount;
+            crossAxisCount;
 
         return Wrap(
-          spacing: AppSpacing.lg, // Horizontal spacing
-          runSpacing: AppSpacing.lg, // Vertical spacing
+          spacing: AppSpacing.lg,
+          runSpacing: AppSpacing.lg,
           children: projectsMockData
+              .asMap()
+              .entries
               .map(
-                (project) => SizedBox(
+                (entry) => SizedBox(
                   width: cardWidth,
-                  child: ProjectCard(project: project),
+                  child: ProjectCard(
+                    project: entry.value,
+                    animationDelay:
+                        Duration(milliseconds: entry.key * 80),
+                  ),
                 ),
               )
               .toList(),

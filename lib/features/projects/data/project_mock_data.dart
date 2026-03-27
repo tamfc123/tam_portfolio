@@ -28,18 +28,33 @@ final List<ProjectModel> projectsMockData = [
     id: '1',
     title: 'E-Commerce Mobile App',
     description:
-          'Ứng dụng bán quần áo xây dựng bằng Flutter, hỗ trợ thanh toán, quản lý sản phẩm.',
+        'Ứng dụng bán quần áo xây dựng bằng Flutter, hỗ trợ thanh toán, quản lý sản phẩm.',
     technologies: ['Flutter', 'MongoDB', 'Cloudinary', 'Bloc'],
     githubUrl: 'https://github.com/tamfc123/fashion_fontend',
+    images: [
+      'assets/images/ecom1.png',
+      'assets/images/ecom2.png',
+      'assets/images/ecom3.png',
+    ],
   ),
   ProjectModel(
     id: '2',
     title: 'English Learning Mobile App',
     description:
         'Ứng dụng học tiếng Anh cho sinh viên với các tính năng quiz, flashcards, vocabulary practice, và nhiều hơn nữa.',
-    technologies: ['Flutter', 'PostgreSQL', 'Provider', 'Cloudinary', 'Azure Services'],
+    technologies: [
+      'Flutter',
+      'PostgreSQL',
+      'Provider',
+      'Cloudinary',
+      'Azure Services',
+    ],
     githubUrl: 'https://github.com/tamfc123/fontend_mobile',
-    images: ['assets/images/english1.jpg', 'assets/images/english2.jpg', 'assets/images/english3.jpg'],
+    images: [
+      'assets/images/english1.jpg',
+      'assets/images/english2.jpg',
+      'assets/images/english3.jpg',
+    ],
     youtubeUrl: 'https://www.youtube.com/watch?v=i-_pA9Bj7t4&t=207s',
   ),
 ];

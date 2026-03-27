@@ -5,23 +5,64 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/app_colors.dart';
 import '../data/project_mock_data.dart';
 
-/// Project Card Widget
-/// Displays individual project information in a card format
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
+  final Duration animationDelay;
 
-  const ProjectCard({super.key, required this.project});
+  const ProjectCard({
+    super.key,
+    required this.project,
+    this.animationDelay = Duration.zero,
+  });
 
   @override
   State<ProjectCard> createState() => _ProjectCardState();
 }
 
-class _ProjectCardState extends State<ProjectCard> {
+class _ProjectCardState extends State<ProjectCard>
+    with SingleTickerProviderStateMixin {
   bool _isHovered = false;
+
+  AnimationController? _entryController;
+  Animation<double>? _fade;
+  Animation<Offset>? _slide;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _entryController = controller;
+
+    _fade = CurvedAnimation(parent: controller, curve: Curves.easeOut);
+
+    _slide = Tween<Offset>(
+      begin: const Offset(0, 0.15),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: controller, curve: Curves.easeOut),
+    );
+
+    Future.delayed(widget.animationDelay, () {
+      if (mounted) controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _entryController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
+    final fade = _fade;
+    final slide = _slide;
+
+    Widget card = MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedScale(
@@ -35,9 +76,10 @@ class _ProjectCardState extends State<ProjectCard> {
               borderRadius: AppBorderRadius.large,
               border: Border.all(
                 color: _isHovered
-                    ? Theme.of(
-                        context,
-                      ).colorScheme.primary.withValues(alpha: 0.5)
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.5)
                     : Colors.transparent,
                 width: 2,
               ),
@@ -45,8 +87,6 @@ class _ProjectCardState extends State<ProjectCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Image removed by request — visual will be handled elsewhere or later.
-                // Content
                 Padding(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   child: Column(
@@ -68,14 +108,22 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
       ),
     );
+
+    if (fade == null || slide == null) return card;
+
+    return FadeTransition(
+      opacity: fade,
+      child: SlideTransition(position: slide, child: card),
+    );
   }
 
   Widget _buildTitle(BuildContext context) {
     return Text(
       widget.project.title,
-      style: Theme.of(
-        context,
-      ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+      style: Theme.of(context)
+          .textTheme
+          .titleLarge
+          ?.copyWith(fontWeight: FontWeight.bold),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
@@ -85,9 +133,9 @@ class _ProjectCardState extends State<ProjectCard> {
     return Text(
       widget.project.description,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: AppColors.textSecondary,
-        height: 1.5,
-      ),
+            color: AppColors.textSecondary,
+            height: 1.5,
+          ),
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );
@@ -104,14 +152,16 @@ class _ProjectCardState extends State<ProjectCard> {
                 vertical: 2,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).colorScheme.primary.withValues(alpha: 0.2),
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withValues(alpha: 0.2),
                 borderRadius: AppBorderRadius.small,
                 border: Border.all(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.primary.withValues(alpha: 0.5),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withValues(alpha: 0.5),
                 ),
               ),
               child: Text(
@@ -131,19 +181,17 @@ class _ProjectCardState extends State<ProjectCard> {
   Widget _buildButtons(BuildContext context) {
     return Row(
       children: [
-        // "View" button for detailed project info
         Expanded(
           child: ElevatedButton(
-            onPressed: () {
-              _onButtonPressed('View');
-            },
+            onPressed: () => _onButtonPressed('View'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: AppColors.textPrimary,
               shape: RoundedRectangleBorder(
                 borderRadius: AppBorderRadius.small,
               ),
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             ),
             child: const Text(
               'Xem',
@@ -155,9 +203,7 @@ class _ProjectCardState extends State<ProjectCard> {
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: OutlinedButton(
-              onPressed: () {
-                _onButtonPressed('GitHub');
-              },
+              onPressed: () => _onButtonPressed('GitHub'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.textPrimary,
                 side: BorderSide(
@@ -166,7 +212,8 @@ class _ProjectCardState extends State<ProjectCard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: AppBorderRadius.small,
                 ),
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                padding:
+                    const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               ),
               child: const Text(
                 'GitHub',
@@ -196,9 +243,10 @@ class _ProjectCardState extends State<ProjectCard> {
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   'Công nghệ sử dụng:',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Wrap(
@@ -207,9 +255,10 @@ class _ProjectCardState extends State<ProjectCard> {
                       .map(
                         (tech) => Chip(
                           label: Text(tech),
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.primary.withValues(alpha: 0.2),
+                          backgroundColor: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withValues(alpha: 0.2),
                         ),
                       )
                       .toList(),
@@ -218,9 +267,10 @@ class _ProjectCardState extends State<ProjectCard> {
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     'Ảnh một vài giao diện:',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Row(
@@ -231,12 +281,11 @@ class _ProjectCardState extends State<ProjectCard> {
                         child: GestureDetector(
                           onTap: () => _showImageDialog(context, imagePath),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              right: AppSpacing.sm,
-                            ),
+                            padding:
+                                const EdgeInsets.only(right: AppSpacing.sm),
                             child: ClipRRect(
                               borderRadius: AppBorderRadius.small,
-                              child: Container(
+                              child: SizedBox(
                                 width: 120,
                                 height: 200,
                                 child: Image.asset(
@@ -280,9 +329,7 @@ class _ProjectCardState extends State<ProjectCard> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('Đóng'),
             ),
           ],
@@ -297,11 +344,13 @@ class _ProjectCardState extends State<ProjectCard> {
       builder: (BuildContext context) {
         return Dialog(
           child: Container(
-            constraints: const BoxConstraints(maxWidth: 600, maxHeight: 800),
+            constraints:
+                const BoxConstraints(maxWidth: 600, maxHeight: 800),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(child: Image.asset(imagePath, fit: BoxFit.contain)),
+                Expanded(
+                    child: Image.asset(imagePath, fit: BoxFit.contain)),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: const Text('Đóng'),
@@ -323,7 +372,8 @@ class _ProjectCardState extends State<ProjectCard> {
         if (widget.project.githubUrl != null) {
           final uri = Uri.parse(widget.project.githubUrl!);
           try {
-            if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+            if (!await launchUrl(uri,
+                mode: LaunchMode.externalApplication)) {
               debugPrint('Failed to open GitHub URL: $uri');
             }
           } catch (e) {

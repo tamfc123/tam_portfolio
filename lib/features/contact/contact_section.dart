@@ -30,19 +30,20 @@ class ContactSection extends StatelessWidget {
   }
 
   Widget _buildSectionTitle(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Liên Hệ Với Tôi',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
+          ),
         ),
         const SizedBox(height: AppSpacing.md),
         Container(
-          width: 80,
+          width: screenWidth > 600 ? 200 : 80,
           height: 4,
           decoration: BoxDecoration(
             gradient: Theme.of(context).accentGradient,
@@ -61,15 +62,9 @@ class ContactSection extends StatelessWidget {
         if (isDesktop) {
           return Row(
             children: [
-              Expanded(
-                flex: 1,
-                child: _buildLeftContent(context),
-              ),
+              Expanded(flex: 1, child: _buildLeftContent(context)),
               const SizedBox(width: AppSpacing.xl),
-              Expanded(
-                flex: 1,
-                child: _buildRightContent(context),
-              ),
+              Expanded(flex: 1, child: _buildRightContent(context)),
             ],
           );
         } else {
@@ -94,25 +89,25 @@ class ContactSection extends StatelessWidget {
         Text(
           'Hãy Kết Nối',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
         ),
         const SizedBox(height: AppSpacing.md),
         Text(
           'Tôi luôn quan tâm đến các dự án và cơ hội mới. Hãy thoải mái liên hệ thông qua bất kỳ phương pháp nào dưới đây.',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: AppColors.textSecondary,
-                height: 1.6,
-              ),
+            color: AppColors.textSecondary,
+            height: 1.6,
+          ),
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(
           'Thời gian phản hồi: Trong vòng 24 giờ',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-                fontStyle: FontStyle.italic,
-              ),
+            color: AppColors.textSecondary,
+            fontStyle: FontStyle.italic,
+          ),
         ),
       ],
     );
